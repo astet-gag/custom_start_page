@@ -59,7 +59,11 @@ class StartPage {
 					</div>
 				`).insertBefore($('#background-uploader-wrapper'));
 				$('#background-uploader-wrapper').removeClass('active');
+
 				this.#state.backgrounds.push(reader.result);
+				if (this.#state.selectedBackground === false) this.#state.selectedBackground = 0;
+				this.#saveSettings();
+				this.#applySettings();
 			}
 
 			if (file) {
@@ -73,6 +77,25 @@ class StartPage {
                 location.href = 'https://google.com/search?q='+searchText.replace(/\s+?/,'+');
             }
         });
+
+		$('#next-bg').click(_ => {
+			let selBg = this.#state.selectedBackground;
+			if (selBg !== false) {
+				selBg = selBg == this.#state.backgrounds.length - 1 ? 0 : selBg + 1;
+				this.#state.selectedBackground = selBg;
+				this.#saveSettings();
+				this.#applySettings();
+			}
+		});
+		$('#prev-bg').click(_ => {
+			let selBg = this.#state.selectedBackground;
+			if (selBg !== false) {
+				selBg = selBg == 0 ? this.#state.backgrounds.length - 1 : selBg - 1;
+				this.#state.selectedBackground = selBg;
+				this.#saveSettings();
+				this.#applySettings();
+			}
+		});
 	}
 
 	#saveSettings() {
@@ -80,6 +103,10 @@ class StartPage {
 	}
 
 	#applySettings() {
+		if (this.#state.selectedBackground !== false) {
+			$('body').css('--bg','url('+this.#state.backgrounds[this.#state.selectedBackground]+')');
+		}
+
 	    this.#state.modules.map(e => {
 	  		let m = JSON.parse(localStorage.getItem(e));
 	  		this.#modules[e] = eval(m.code);
@@ -149,6 +176,18 @@ class StartPage {
 
 	#redrawSettings() {
 		let mList = '';
+
+		$('#background-uploader-wrapper').addClass('active').siblings().remove();
+		this.#state.backgrounds.map(e => {
+			$(`
+				<div class="carousel-item">
+					<div class="ratio ratio-16x9">
+						<img src="${e}">
+					</div>
+				</div>
+			`).insertBefore($('#background-uploader-wrapper'));
+		});
+
 	    this.#state.modules.map(e => {
 	  		let m = JSON.parse(localStorage.getItem(e)).about;
 	    	mList += `
