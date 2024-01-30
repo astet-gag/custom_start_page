@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, viewport-fit=cover">
+		<meta name="theme-color" content="#000000">
+		<meta content="IE=Edge" http-equiv="X-UA-Compatible">
+		
+		<title>Start Page</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+		<link rel="stylesheet" href="./css/main.css">
+	</head>
+	<body>
+		<div class="w-100 h-100 d-flex flex-column align-items-center justify-content-between">
+			<div id="header-controls">
+				<div id="color-changer">
+					<div data-bg-color="purple"><div></div></div>
+					<div data-bg-color="orange"><div></div></div>
+					<div data-bg-color="blue"><div></div></div>
+					<div data-bg-color="green"><div></div></div>
+				</div>
+
+				<div id="settings-btn">
+					<span class="material-symbols-outlined">settings</span>
+					<div>
+						<div>
+							<div id="showSettings">Start Page</div>
+							<a href="vivaldi://settings/appearance/" target="_blank">Browser</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="container d-flex align-items-center justify-content-center" style="flex: 1 1 auto;">
+				<div class="col-6">
+					<input type="search" class="form-control" id="search" autofocus>
+					<div class="col-12 p-3 pe-1 d-flex align-items-center justify-content-between">
+						<div>
+							<p id="time"></p>
+						</div>
+						<div>
+							<div id="weather">
+								<p>
+									<span></span>
+									<span class="material-symbols-outlined"></span>
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12" id="extantion-panels">
+						<div class="col-6">
+							<div class="extantion-panel">
+								<div id="stats"></div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="extantion-panel">
+								<div id="statsBal" style="display: flex; align-items: center; justify-content: center; font-size: 3rem;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="settings" style="display: none;">
+			<div class="col-12 col-md-6 p-3">
+				<p class="col-12 mb-2">Backgrounds</p>
+				<div id="settings-backgrounds">
+					<div id="backgroundsCarousel" class="carousel slide" data-bs-ride="false">
+						<div class="carousel-inner">
+							<div class="carousel-item active" id="background-uploader-wrapper">
+								<div class="ratio ratio-16x9">
+									<div id="background-uploader">
+										<span class="material-symbols-outlined" style="font-size: 5rem;">gesture_select</span>
+										<p>Click to upload</p>
+										<input type="file">
+									</div>
+								</div>
+							</div>
+						</div>
+						<button class="carousel-control-prev" type="button" data-bs-target="#backgroundsCarousel" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						<button class="carousel-control-next" type="button" data-bs-target="#backgroundsCarousel" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
+					</div>
+				</div>
+				<hr>
+				<p class="col-12 mb-2">Modules</p>
+				<div id="settings-modules"></div>
+				<hr>
+				<p class="col-12 mb-2">Add Module</p>
+				<div id="settings-add-module">
+					<input type="file" class="form-control" id="settings-module-upload">
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="./js/main.js"></script>
+	</body>
+</html>

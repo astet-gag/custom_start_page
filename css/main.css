@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;200;300;400;500;600;700&display=swap');
+@font-face {
+    font-family: 'Material Symbols Outlined';
+    font-style: normal;
+    font-weight: 100;
+    src: url(https://fonts.gstatic.com/s/materialsymbolsoutlined/v156/kJF4BvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzByHX9rA6RzaxHMPdY40KH8nGzv3fz_VFU22ZZLsYEpzC_1veq5Y0J1Llf.woff2) format('woff2');
+  }
+  
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+* {
+    line-height: 1.15em;
+    margin: 0;
+    padding: 0;
+    font-family: 'Work Sans', sans-serif;
+}
+
+p {
+    margin: 0;
+}
+
+html,body {
+    background: #000;
+    height: 100%;
+    color: #fff;
+
+    font-weight: 400;
+    overflow: hidden;
+}
+
+
+body[data-bg="orange"] {
+    background-image: url(./../img/orange.jpeg);
+    transition: background-image 1s;
+}
+body[data-bg="green"] {
+    background-image: url(./../img/green.jpeg);
+    transition: background-image 1s;
+}
+body[data-bg="blue"] {
+    background-image: url(./../img/blue.jpeg);
+    transition: background-image 1s;
+}
+body[data-bg="purple"] {
+    background-image: url(./../img/purple.jpeg);
+    transition: background-image 1s;
+}
+
+body {
+    background-size: cover;
+    background-position: center;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+#header-controls {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#settings-btn {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 0.25rem;
+}
+#settings-btn>a {
+    color: #fff;
+    text-decoration: none;
+    height: 1.25rem;
+    width: 1.25rem;
+    margin: 0.25rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#settings-btn span {
+    font-size: 1.75rem;
+    transform: rotate(0deg);
+    transition: transform 1s;
+    cursor: pointer;
+}
+#settings-btn:hover span {
+    transform: rotate(360deg);
+    transition: transform 1s;
+}
+
+#settings-btn>div {
+    position: absolute;
+    top: 2rem;
+    right: 0;
+    overflow: hidden;
+
+    max-height: 0%;
+    transition: max-height 0.5s;
+}
+#settings-btn:hover>div {
+    max-height: 100%;
+    transition: max-height 0.5s;
+}
+
+#settings-btn>div>div {
+    background: #fff;
+    border: 2px solid #fefefe;
+    border-radius: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+#settings-btn>div>div>* {
+    display: block;
+    text-decoration: none;
+    color: #000;
+
+    padding: 0.5rem 0;
+    background-image: radial-gradient(circle at center, #0000, #fff);
+    transition: background-color 0.5s;
+    cursor: pointer;
+}
+#settings-btn>div>div>*:hover {
+    background-color: #ddd;
+    transition: background-color 0.5s;
+}
+#settings-btn>div>div>*:not(:last-child) {
+    border-bottom: 1px solid #ccc;
+}
+
+#settings {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1000;
+
+    background-color: #0008;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#settings>div {
+    background: #171717;
+    border: 2px solid #212020;
+    border-radius: 0.75rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+#settings-modules {
+    border: 2px solid #212020;
+    border-radius: 0.5rem;
+    overflow: overlay;
+
+    max-height: 10rem;
+}
+#settings-modules>div {
+    padding: 0.5rem;
+}
+
+#color-changer {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 0.25rem;
+}
+#color-changer>div {
+    border-radius: 5000px;
+    height: 1.5rem;
+    width: 1.5rem;
+    margin: 0.25rem;
+    padding: 0.15rem;
+
+    cursor: pointer;
+
+    background-color: #fff5;
+    transition: background-color 0.5s;
+}
+#color-changer>div:hover {
+    background-color: #ffff;
+    transition: background-color 0.5s;
+}
+#color-changer>div>div {
+    border-radius: 5000px;
+    height: 100%;
+    width: 100%;
+}
+#color-changer>div:nth-child(1)>div {
+    background-color: #c800ff;
+}
+#color-changer>div:nth-child(2)>div {
+    background-color: #ff9500;
+}
+#color-changer>div:nth-child(3)>div {
+    background-color: #007bff;
+}
+#color-changer>div:nth-child(4)>div {
+    background-color: #33df4a;
+}
+
+#time {
+    font-size: 7rem;
+    font-weight: 100;
+}
+#time>span {
+    font-size: 2rem;
+    font-weight: 300;
+}
+
+#weather {
+    
+}
+#weather>p:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 7rem;
+    font-weight: 100;
+}
+#weather>p:first-child>span:first-child {
+}
+#weather>p:first-child>span:last-child {
+}
+
+#search {
+    border-radius: 1rem;
+    font-size: 1.5rem;
+    font-weight: 300;
+    box-shadow: none !important;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid white;
+    color: #fff;
+
+    border: 2px solid #fff3;
+    background: #0000;
+    transition: backdrop-filter 0.5s, background 0.5s, border 0.5s;
+}
+#search:focus,
+#search:hover {
+    backdrop-filter: blur(5px);
+    background: #0008;
+    border: 2px solid #fff;
+    transition: backdrop-filter 0.5s, background 0.5s, border 0.5s;
+}
+
+#extantion-panels {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#extantion-panels>div:not(:first-child) {
+    padding-left: 0.5rem;
+}
+#extantion-panels>div:not(:last-child) {
+    padding-right: 0.5rem;
+}
+
+.extantion-panel {
+    border-radius: 1rem;
+    padding: 0.5rem;
+    border: 2px solid #fff3;
+    transition: backdrop-filter 0.5s, background 0.5s, border 0.5s;
+}
+.extantion-panel:hover {
+    backdrop-filter: blur(5px);
+    background: #0008;
+    border: 2px solid #fff;
+    transition: backdrop-filter 0.5s, background 0.5s, border 0.5s;
+}
+.extantion-panel>div {
+    min-height: 5rem;
+    opacity: 0.2;
+    transition: opacity 0.5s;
+}
+.extantion-panel:hover>div {
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+
+#background-uploader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 2px dashed #fff;
+}
+#background-uploader>input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    background: red;
+    cursor: pointer;
+}
+.carousel-item>div>* {
+    border-radius: 0.5rem;
+}
