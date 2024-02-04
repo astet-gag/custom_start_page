@@ -147,8 +147,8 @@ class StartPage {
 
 				if (m.width != undefined) {
 					let c = $(`<div class="col-${m.width == 1 ? 6 : 12}">
-						<div class="extantion-panel"></div>
-					</div>`).appendTo($('#extantion-panels'));
+						<div class="extention-panel"></div>
+					</div>`).appendTo($('#extention-panels'));
 					this.#modules[e]._container = $(c).children();
 				}
 	    	} catch(e) {
@@ -201,14 +201,14 @@ class StartPage {
 		this.#state.backgrounds.map(e => {
 			$(`
 				<div class="carousel-item">
-					<div class="ratio ratio-16x9">
+					<div>
 						<img src="${e}">
 					</div>
 				</div>
 			`).insertBefore($('#background-uploader-wrapper'));
 		});
 
-	    this.#state.modules.map(e => {
+	    Object.keys(this.#modules).map(e => {
 			let m = this.#modules[e];
 	    	mList += `
 	    		<div class="col-12">${m._module.title} | v${m._module.version}</div>

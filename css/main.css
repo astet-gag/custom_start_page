@@ -209,41 +209,41 @@ body {
     transition: backdrop-filter 0.5s, background 0.5s, border 0.5s;
 }
 
-#extantion-panels {
+#extention-panels {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
     margin: -0.5rem;
 }
-#extantion-panels>div {
+#extention-panels>div {
     padding: 0.5rem;
 }
-#extantion-panels>div:not(:first-child) {
+#extention-panels>div:not(:first-child) {
     padding-left: 0.5rem;
 }
-#extantion-panels>div:not(:last-child) {
+#extention-panels>div:not(:last-child) {
     padding-right: 0.5rem;
 }
 
-.extantion-panel {
+.extention-panel {
     border-radius: 1rem;
     padding: 0.5rem;
     border: 2px solid #fff3;
     transition: backdrop-filter 0.5s, background 0.5s, border 0.5s;
 }
-.extantion-panel:hover {
+.extention-panel:hover {
     backdrop-filter: blur(5px);
     background: #0008;
     border: 2px solid #fff;
     transition: backdrop-filter 0.5s, background 0.5s, border 0.5s;
 }
-.extantion-panel>div {
+.extention-panel>div {
     min-height: 5rem;
     opacity: 0.2;
     transition: opacity 0.5s;
 }
-.extantion-panel:hover>div {
+.extention-panel:hover>div {
     opacity: 1;
     transition: opacity 0.5s;
 }
