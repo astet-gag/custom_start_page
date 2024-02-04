@@ -14,6 +14,7 @@
 		<link rel="stylesheet" href="./css/main.css">
 	</head>
 	<body>
+		<style id="dynamic-styles"></style>
 		<div class="w-100 h-100 d-flex flex-column align-items-center justify-content-between">
 			<div id="header-controls">
 				<div id="background-changer">
@@ -35,22 +36,9 @@
 			<div class="container d-flex align-items-center justify-content-center" style="flex: 1 1 auto;">
 				<div class="col-6">
 					<input type="search" class="form-control" id="search" autofocus>
-					<!-- <div class="col-12 p-3 pe-1 d-flex align-items-center justify-content-between">
-						<div>
-							<p id="time"></p>
-						</div>
-						<div>
-							<div id="weather">
-								<p>
-									<span></span>
-									<span class="material-symbols-outlined"></span>
-								</p>
-							</div>
-						</div>
-					</div>
 
 					<div class="col-12" id="extantion-panels">
-						<div class="col-6">
+						<!-- <div class="col-6">
 							<div class="extantion-panel">
 								<div id="stats"></div>
 							</div>
@@ -59,8 +47,8 @@
 							<div class="extantion-panel">
 								<div id="statsBal" style="display: flex; align-items: center; justify-content: center; font-size: 3rem;"></div>
 							</div>
-						</div>
-					</div> -->
+						</div> -->
+					</div>
 				</div>
 			</div>
 		</div>
@@ -72,10 +60,11 @@
 					<div id="backgroundsCarousel" class="carousel slide" data-bs-ride="false">
 						<div class="carousel-inner">
 							<div class="carousel-item active" id="background-uploader-wrapper">
-								<div class="ratio ratio-16x9">
+								<div>
 									<div id="background-uploader">
 										<span class="material-symbols-outlined" style="font-size: 5rem;">gesture_select</span>
 										<p>Click to upload</p>
+										<p id="recomended-resolution">Recomended resolution: <span></span></p>
 										<input type="file">
 									</div>
 								</div>
