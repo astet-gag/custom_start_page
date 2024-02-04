@@ -6,6 +6,7 @@ class StartPage {
 		selectedBackground: false
 	};
 	#modules = {};
+	#screenResolutin = {};
 
 	constructor() {
 		this.#setEventListeners();
@@ -22,12 +23,34 @@ class StartPage {
 	    setInterval(_ => {
 	    	this.#modulesUpdate();
 	    },1e3);
+		this.#updateScreenResolution();
+	}
+
+	#updateScreenResolution() {
+		this.#screenResolutin = {
+			x: $('body').width(),
+			y: $('body').height()
+		};
+
+		$('style#dynamic-styles').text(`
+			:root {
+				--screenW: ${this.#screenResolutin.x};
+				--screenH: ${this.#screenResolutin.y};
+			}
+		`);
 	}
 
 	#setEventListeners() {
+		$(window).on('resize', _ => {
+			this.#updateScreenResolution();
+		});
+
 		$('#showSettings').click(_ => {
 			this.#redrawSettings();
 			$('#settings').fadeIn(500);
+
+			let res = this.#screenResolutin;
+			$('#recomended-resolution').children('span').text(res.x+'x'+res.y);
 		});
 		$('#settings').click(function(e) {
 			if (e.target == this) $('#settings').fadeOut(500);
@@ -53,7 +76,7 @@ class StartPage {
 			reader.onloadend = _ => {
 				$(`
 					<div class="carousel-item active">
-						<div class="ratio ratio-16x9">
+						<div>
 							<img src="${reader.result}">
 						</div>
 					</div>
@@ -108,16 +131,26 @@ class StartPage {
 		}
 
 	    this.#state.modules.map(e => {
-	  		let m = JSON.parse(localStorage.getItem(e));
-	  		this.#modules[e] = eval(m.code);
+	  		let m = localStorage.getItem(e);
+	  		this.#modules[e] = eval(m);
 	    });
 	}
 
 	#modulesInit() {
 	    Object.keys(this.#modules).map(e => {
 	    	try {
-	    		eval(localStorage.getItem(e));
-	        	this.#modules[e]._init();
+				let m = this.#modules[e];
+	        	m._init();
+				if (m._styles != undefined) {
+					$('head').append('<style>'+m._styles+'</style>');
+				}
+
+				if (m.width != undefined) {
+					let c = $(`<div class="col-${m.width == 1 ? 6 : 12}">
+						<div class="extantion-panel"></div>
+					</div>`).appendTo($('#extantion-panels'));
+					this.#modules[e]._container = $(c).children();
+				}
 	    	} catch(e) {
 	    		console.warn(e);
 	    	}
@@ -129,34 +162,21 @@ class StartPage {
 	    	try {
 	        	this.#modules[e]._update();
 	    	} catch(e) {
-	    		console.warning(e);
+	    		console.warn(e);
 	    	}
 	    });
 	}
 
 	#addModule(moduleData) {
-		let rows = moduleData.split('\n');
-		let about = {
-			version: '0.0.0',
-			description: 'Empty Description',
-			title: 'Empty Title'
-		};
-		for(let row of rows) {
-			if (row.substr(0,2) == '//') {
-				row = row.substr(2).trim().split(' ');
-				if (row[0] != '' && (row[1] != undefined && row[1] != '')) {
-					about[row[0]] = row.slice(1).join(' ');
-				}
-			}
+		let pack = moduleData.split('\n')[0];
+		if (/^\/\/\spackage\s[a-z\d\_\-]+$/.test(pack)) {
+			pack = pack.substr(2).trim().split(' ')[1];
 		}
 
-		if (about.package != undefined) {
-			if (this.#state.modules.indexOf(about.package) == -1) {
-				this.#state.modules.push(about.package);
-				localStorage.setItem(about.package,JSON.stringify({
-					about: about,
-					code: moduleData
-				}));
+		if (pack != undefined) {
+			if (this.#state.modules.indexOf(pack) == -1) {
+				this.#state.modules.push(pack);
+				localStorage.setItem(pack,moduleData);
 
 				this.#applySettings();
 				this.#saveSettings();
@@ -189,9 +209,9 @@ class StartPage {
 		});
 
 	    this.#state.modules.map(e => {
-	  		let m = JSON.parse(localStorage.getItem(e)).about;
+			let m = this.#modules[e];
 	    	mList += `
-	    		<div class="col-12">${m.title} | v${m.version}</div>
+	    		<div class="col-12">${m._module.title} | v${m._module.version}</div>
 	    	`;
 	    });
 	    $('#settings-modules').html(mList);

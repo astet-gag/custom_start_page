@@ -43,24 +43,6 @@ html,body {
     overflow: hidden;
 }
 
-
-body[data-bg="orange"] {
-    background-image: url(./../img/orange.jpeg);
-    transition: background-image 1s;
-}
-body[data-bg="green"] {
-    background-image: url(./../img/green.jpeg);
-    transition: background-image 1s;
-}
-body[data-bg="blue"] {
-    background-image: url(./../img/blue.jpeg);
-    transition: background-image 1s;
-}
-body[data-bg="purple"] {
-    background-image: url(./../img/purple.jpeg);
-    transition: background-image 1s;
-}
-
 body {
     background-image: var(--bg);
     background-size: cover;
@@ -206,30 +188,6 @@ body {
     transition: background-color 0.5s;
 }
 
-#time {
-    font-size: 7rem;
-    font-weight: 100;
-}
-#time>span {
-    font-size: 2rem;
-    font-weight: 300;
-}
-
-#weather {
-    
-}
-#weather>p:first-child {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 7rem;
-    font-weight: 100;
-}
-#weather>p:first-child>span:first-child {
-}
-#weather>p:first-child>span:last-child {
-}
-
 #search {
     border-radius: 1rem;
     font-size: 1.5rem;
@@ -255,6 +213,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    margin: -0.5rem;
+}
+#extantion-panels>div {
+    padding: 0.5rem;
 }
 #extantion-panels>div:not(:first-child) {
     padding-left: 0.5rem;
@@ -304,4 +267,17 @@ body {
 }
 .carousel-item>div>* {
     border-radius: 0.5rem;
+}
+
+#recomended-resolution {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: #727272;
+}
+
+#backgroundsCarousel .carousel-item>div {
+    aspect-ratio: var(--screenW)/var(--screenH);
+}
+#backgroundsCarousel .carousel-item>div>div {
+    height: 100%;
 }
