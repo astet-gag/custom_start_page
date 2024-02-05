@@ -172,17 +172,21 @@ class StartPage {
 		}
 	}
 
+	#moduleInit(e) {
+		let m = this.#modules[e];
+		let styles = m._module.styles != undefined ? `<style>${m._module.styles}</style>` : '';
+		$('head').append(styles);
+		
+		m._memory = new this.#memory(e);
+		m._container = this.#container;
+
+		m._init();
+	}
+
 	#modulesInit() {
 	    Object.keys(this.#modules).map(e => {
 	    	try {
-				let m = this.#modules[e];
-				let styles = m._module.styles != undefined ? `<style>${m._module.styles}</style>` : '';
-				$('head').append(styles);
-				
-				m._memory = new this.#memory(e);
-				m._container = this.#container;
-
-				m._init();
+				this.#moduleInit(e);
 	    	} catch(e) {
 	    		console.warn(e);
 	    	}
@@ -211,11 +215,12 @@ class StartPage {
 				localStorage.setItem(pack,moduleData);
 				localStorage.setItem(pack+'Mem','{}');
 
-				this.#applySettings();
 				this.#saveSettings();
+
+				this.#modules[pack] = eval(moduleData);
+				this.#moduleInit(pack);
+				
 				this.#redrawSettings();
-				alert('Module loaded successfully');
-				location.reload();
 			} else {
 				alert('This module already exists');
 			}
