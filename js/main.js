@@ -161,9 +161,9 @@ class StartPage {
 				if (m._module.width !== undefined) {
 					let c = $(`<div class="col-${m._module.width == 1 ? 6 : 12}">
 						${styles}
-						<div class="extention-panel ${m._module.styled !== undefined && m._module.styled !== false ? 'styled' : ''}"></div>
-					</div>`).appendTo($('#extention-panels'));
-					m._container = $(c).children('.extention-panel');
+						<div class="extension-panel ${m._module.styled !== undefined && m._module.styled !== false ? 'styled' : ''}"></div>
+					</div>`).appendTo($('#extension-panels'));
+					m._container = $(c).children('.extension-panel');
 				}
 				m._init();
 	    	} catch(e) {
