@@ -123,13 +123,6 @@ class StartPage {
 				reader.readAsDataURL(file);
 			}
 		});
-		
-        $('#search').keyup(function(e) {
-            if (e.keyCode == 13) {
-                let searchText = $(this).val();
-                location.href = 'https://google.com/search?q='+searchText.replace(/\s+?/,'+');
-            }
-        });
 
 		$('#next-bg').click(_ => {
 			let selBg = this.#state.selectedBackground;
