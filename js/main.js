@@ -3,7 +3,8 @@ class StartPage {
 		modules: [],
 		settings: {},
 		backgrounds: [],
-		selectedBackground: false
+		selectedBackground: false,
+		memory: {}
 	};
 	#modules = {};
 	#screenResolutin = {};
@@ -24,6 +25,21 @@ class StartPage {
 	    	this.#modulesUpdate();
 	    },1e3);
 		this.#updateScreenResolution();
+	}
+
+	#memory = {
+		set: (varName,value) => {
+			this.#state.memory[varName] = value;
+			this.#saveSettings();
+			return value;
+		},
+		get: (varName) => {
+			if (this.#state.memory[varName] !== undefined) {
+				return this.#state.memory[varName];
+			} else {
+				return undefined;
+			}
+		}
 	}
 
 	#updateScreenResolution() {
@@ -76,9 +92,7 @@ class StartPage {
 			reader.onloadend = _ => {
 				$(`
 					<div class="carousel-item active">
-						<div>
-							<img src="${reader.result}">
-						</div>
+						<div style="--upload-bg: url(${reader.result})"></div>
 					</div>
 				`).insertBefore($('#background-uploader-wrapper'));
 				$('#background-uploader-wrapper').removeClass('active');
@@ -140,17 +154,18 @@ class StartPage {
 	    Object.keys(this.#modules).map(e => {
 	    	try {
 				let m = this.#modules[e];
-	        	m._init();
-				if (m._styles != undefined) {
-					$('head').append('<style>'+m._styles+'</style>');
-				}
+				let styles = m._module.styles != undefined ? `<style>${m._module.styles}</style>` : '';
+				
+				m._memory = this.#memory;
 
-				if (m.width != undefined) {
-					let c = $(`<div class="col-${m.width == 1 ? 6 : 12}">
-						<div class="extantion-panel"></div>
-					</div>`).appendTo($('#extantion-panels'));
-					this.#modules[e]._container = $(c).children();
+				if (m._module.width !== undefined) {
+					let c = $(`<div class="col-${m._module.width == 1 ? 6 : 12}">
+						${styles}
+						<div class="extension-panel ${m._module.styled !== undefined && m._module.styled !== false ? 'styled' : ''}"></div>
+					</div>`).appendTo($('#extension-panels'));
+					m._container = $(c).children('.extension-panel');
 				}
+				m._init();
 	    	} catch(e) {
 	    		console.warn(e);
 	    	}
@@ -201,14 +216,12 @@ class StartPage {
 		this.#state.backgrounds.map(e => {
 			$(`
 				<div class="carousel-item">
-					<div class="ratio ratio-16x9">
-						<img src="${e}">
-					</div>
+					<div style="--upload-bg: url(${e})"></div>
 				</div>
 			`).insertBefore($('#background-uploader-wrapper'));
 		});
 
-	    this.#state.modules.map(e => {
+	    Object.keys(this.#modules).map(e => {
 			let m = this.#modules[e];
 	    	mList += `
 	    		<div class="col-12">${m._module.title} | v${m._module.version}</div>
