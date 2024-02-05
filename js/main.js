@@ -3,8 +3,7 @@ class StartPage {
 		modules: [],
 		settings: {},
 		backgrounds: [],
-		selectedBackground: false,
-		memory: {}
+		selectedBackground: false
 	};
 	#modules = {};
 	#screenResolutin = {};
@@ -27,15 +26,29 @@ class StartPage {
 		this.#updateScreenResolution();
 	}
 
-	#memory = {
-		set: (varName,value) => {
-			this.#state.memory[varName] = value;
-			this.#saveSettings();
+	#memory = class {
+		#moduleName = '';
+		constructor(moduleName) {
+			this.#moduleName = moduleName;
+		}
+
+		set(varName,value) {
+			let mem = JSON.parse(localStorage.getItem(this.#moduleName+'Mem'));
+			mem[varName] = value;
+			localStorage.setItem(this.#moduleName+'Mem',JSON.stringify(mem));
+
 			return value;
-		},
-		get: (varName) => {
-			if (this.#state.memory[varName] !== undefined) {
-				return this.#state.memory[varName];
+		}
+		
+		get(varName) {
+			let mem = localStorage.getItem(this.#moduleName+'Mem');
+			if (mem !== null) {
+				mem = JSON.parse(mem);
+				if (mem[varName] !== undefined) {
+					return mem[varName];
+				} else {
+					return undefined;
+				}
 			} else {
 				return undefined;
 			}
@@ -83,6 +96,9 @@ class StartPage {
 			if (file) {
 				reader.readAsText(file);
 			}
+		});
+		$('body').on('removeModule', (_,mn) => {
+			this.#removeModule(mn);
 		});
 
 		$('#background-uploader').children('input').change(_ => {
@@ -150,21 +166,29 @@ class StartPage {
 	    });
 	}
 
+	#container = {
+		get: (size,styled=true) => {
+			if (/^[1,2]$/.test(size)) {
+				let c = $(`<div class="col-${size == 1 ? 6 : 12}">
+					<div class="extension-panel ${styled ? 'styled' : ''}"></div>
+				</div>`).appendTo($('#extension-panels'));
+				return $(c).children('.extension-panel');
+			} else {
+				return false;
+			}
+		}
+	}
+
 	#modulesInit() {
 	    Object.keys(this.#modules).map(e => {
 	    	try {
 				let m = this.#modules[e];
 				let styles = m._module.styles != undefined ? `<style>${m._module.styles}</style>` : '';
+				$('head').append(styles);
 				
-				m._memory = this.#memory;
+				m._memory = new this.#memory(e);
+				m._container = this.#container;
 
-				if (m._module.width !== undefined) {
-					let c = $(`<div class="col-${m._module.width == 1 ? 6 : 12}">
-						${styles}
-						<div class="extension-panel ${m._module.styled !== undefined && m._module.styled !== false ? 'styled' : ''}"></div>
-					</div>`).appendTo($('#extension-panels'));
-					m._container = $(c).children('.extension-panel');
-				}
 				m._init();
 	    	} catch(e) {
 	    		console.warn(e);
@@ -192,11 +216,13 @@ class StartPage {
 			if (this.#state.modules.indexOf(pack) == -1) {
 				this.#state.modules.push(pack);
 				localStorage.setItem(pack,moduleData);
+				localStorage.setItem(pack+'Mem','{}');
 
 				this.#applySettings();
 				this.#saveSettings();
 				this.#redrawSettings();
 				alert('Module loaded successfully');
+				location.reload();
 			} else {
 				alert('This module already exists');
 			}
@@ -205,8 +231,22 @@ class StartPage {
 		}
 	}
 
-	#removeModule(moduleName,moduleClass) {
-		// this.#modules[moduleName] = moduleClass;
+	#removeModule(moduleName) {
+		let moduleIndex = this.#state.modules.indexOf(moduleName);
+		if (moduleIndex > -1) {
+			this.#state.modules.splice(moduleIndex,1);
+
+			delete this.#modules[moduleName];
+
+			localStorage.removeItem(moduleName);
+			localStorage.removeItem(moduleName+'Mem');
+			
+			this.#saveSettings();
+			alert('Module removed successfully');
+			location.reload();
+		} else {
+			alert(`Module with package name "${moduleName}" not found`);
+		}
 	}
 
 	#redrawSettings() {
@@ -224,7 +264,10 @@ class StartPage {
 	    Object.keys(this.#modules).map(e => {
 			let m = this.#modules[e];
 	    	mList += `
-	    		<div class="col-12">${m._module.title} | v${m._module.version}</div>
+	    		<div class="col-12">
+					<span>${m._module.title} | v${m._module.version}</span>
+					<span class="material-symbols-outlined" onclick="$(this).trigger('removeModule','${e}')">delete_forever</span>
+				</div>
 	    	`;
 	    });
 	    $('#settings-modules').html(mList);
