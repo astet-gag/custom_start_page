@@ -214,10 +214,11 @@ body {
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    margin: -0.5rem;
+    margin-top: 0.5rem;
 }
 #extention-panels>div {
-    padding: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 #extention-panels>div:not(:first-child) {
     padding-left: 0.5rem;
@@ -226,24 +227,24 @@ body {
     padding-right: 0.5rem;
 }
 
-.extention-panel {
+.extention-panel.styled {
     border-radius: 1rem;
     padding: 0.5rem;
     border: 2px solid #fff3;
     transition: backdrop-filter 0.5s, background 0.5s, border 0.5s;
 }
-.extention-panel:hover {
+.extention-panel.styled:hover {
     backdrop-filter: blur(5px);
     background: #0008;
     border: 2px solid #fff;
     transition: backdrop-filter 0.5s, background 0.5s, border 0.5s;
 }
-.extention-panel>div {
+.extention-panel.styled>div {
     min-height: 5rem;
     opacity: 0.2;
     transition: opacity 0.5s;
 }
-.extention-panel:hover>div {
+.extention-panel.styled:hover>div {
     opacity: 1;
     transition: opacity 0.5s;
 }
@@ -277,6 +278,10 @@ body {
 
 #backgroundsCarousel .carousel-item>div {
     aspect-ratio: var(--screenW)/var(--screenH);
+    background-image: var(--upload-bg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 1rem;
 }
 #backgroundsCarousel .carousel-item>div>div {
     height: 100%;
